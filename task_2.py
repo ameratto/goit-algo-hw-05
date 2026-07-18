@@ -21,7 +21,7 @@ def generator_numbers(string) -> Generator[float, Any, None]:
 
 
 @num_generator_logger
-def sum_profit(string: str, func: Callable[[str], float]):
+def sum_profit(string: str, func: Callable[[str], Generator[float, Any, None]]):
     total_incal = 0.0
     for number in func(string):
         total_incal += number
