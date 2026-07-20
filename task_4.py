@@ -1,14 +1,16 @@
-###  Декоратори
-
-def input_error(func):
+def error_handler(func):
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
         except ValueError:
             return "Give me name and phone please"
+        except IndexError:
+            return "Give me correct name"
+
     return inner
 
-@input_error
+
+@error_handler
 def add_contact(args, contacts):
     name, phone = args
     contacts[name] = phone
@@ -21,25 +23,18 @@ def changing_error(func):
             return func(*args, **kwargs)
         except ValueError:
             return "Give me correct name"
+
     return inner
 
-@changing_error
+
+@error_handler
 def change_contact(args, contacts):
     name, new_phone = args
     contacts[name] = new_phone
     return "Contact changed."
 
 
-
-def showing_error(func):
-    def inner(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except IndexError:
-            return "Give me correct name"
-    return inner
-
-@showing_error
+@error_handler
 def show_phone(args, contacts):
     name = args[0]
     return contacts[name]
@@ -61,6 +56,9 @@ def main():
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Please enter a command: ").strip().lower()
+        if not user_input:
+            print("Invalid command. Try again.")
+            continue
         command, *args = parse_input(user_input)
         match command:
             case "hello":

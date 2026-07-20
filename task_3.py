@@ -24,16 +24,12 @@ def load_logs(filepath: str) -> list[dict[str, str]]:
 def filter_logs_by_level(logs: list, level: str) -> list[dict[str,str]]:
     match level:
         case "info":
-            print("\nДеталі логів для рівня 'INFO':")
             return [line for line in logs if line["level"].lower() == "info"]
         case "debug":
-            print("\nДеталі логів для рівня 'DEBUG':")
             return [line for line in logs if line["level"].lower() == "debug"]
         case "error":
-            print("\nДеталі логів для рівня 'ERROR':")
             return [line for line in logs if line["level"].lower() == "error"]
         case "warning":
-            print("\nДеталі логів для рівня 'WARNING':")
             return [line for line in logs if line["level"].lower() == "warning"]
         case _: return []
 
