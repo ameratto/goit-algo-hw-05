@@ -6,6 +6,8 @@ def error_handler(func):
             return "Give me name and phone please"
         except IndexError:
             return "Give me correct name"
+        except KeyError:
+            return "Give me correct name"
 
     return inner
 
@@ -17,22 +19,14 @@ def add_contact(args, contacts):
     return "Contact added."
 
 
-def changing_error(func):
-    def inner(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except ValueError:
-            return "Give me correct name"
-
-    return inner
-
-
 @error_handler
 def change_contact(args, contacts):
     name, new_phone = args
-    contacts[name] = new_phone
-    return "Contact changed."
-
+    if contacts[name]:
+        contacts[name] = new_phone
+        return "Contact changed."
+    else:
+        return "Contact not found."
 
 @error_handler
 def show_phone(args, contacts):
